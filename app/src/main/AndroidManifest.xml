@@ -1,0 +1,53 @@
+<!-- app/src/main/AndroidManifest.xml -->
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.fcl.plugin.minimalrenderer">
+
+    <application
+        android:allowBackup="true"
+        android:label="Minimal Renderer Plugin">
+
+        <service
+            android:name=".RendererService"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="net.fabioms42.action.RENDERER_PLUGIN" />
+            </intent-filter>
+
+            <meta-data
+                android:name="renderer_name"
+                android:value="Minimal FPS Renderer" />
+
+            <meta-data
+                android:name="renderer_description"
+                android:value="Basic OpenGL → GLES wrapper with FPS optimizations" />
+
+            <meta-data
+                android:name="renderer_gl_profile"
+                android:value="opengles3" />
+
+            <meta-data
+                android:name="renderer_gl_version"
+                android:value="4.3" />
+
+            <meta-data
+                android:name="renderer_min_mc_version"
+                android:value="1.16" />
+
+            <meta-data
+                android:name="renderer_lib_name"
+                android:value="libminimalrenderer.so" />
+
+        </service>
+
+        <!-- Optional Activity for config (e.g., select folder) -->
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+    </application>
+</manifest>
