@@ -1,0 +1,39 @@
+# .github/workflows/build.yml
+name: Build APK
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Install Android SDK
+      uses: android-actions/setup-android@v2
+      with:
+        sdk-version: '34'  # Target SDK for Android 14+
+        ndk-version: '25.1.8937393'  # NDK for C++ build
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build with Gradle
+      run: ./gradlew assembleRelease
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: app-release
+        path: app/build/outputs/apk/release/app-release-unsigned.apk  # Unsigned for simplicity; sign manually or add signing step
